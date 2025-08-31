@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { User } from './user/entities/user.entity';
-// import { UserController } from './user/user.controller';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -12,7 +12,7 @@ import { User } from './user/entities/user.entity';
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({  // database connection
-        imports: [ConfigModule],
+        imports: [ConfigModule, UserModule],
         useFactory: (configService: ConfigService) => ({
           //parameters for db - postgresql
           type: 'postgres',
