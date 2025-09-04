@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UploadedFile,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -27,22 +28,41 @@ export class UserController {
   }
 
   @Get()
-  findAll() {
-    return this.userService.findAll();
+  async findAll() {
+    const user = await this.userService.findAll();
+    return {
+      succcess: true,
+      user,
+      message: "User read successfully",
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const user = await this.userService.findOne(+id);
+    return {
+      succcess: true,
+      user,
+      message: "User read successfully",
+    }
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    const data = await this.userService.update(+id, updateUserDto);
+    return {
+      succcess: true,
+      data,
+      message: "User read successfully",
+    }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+  async remove(@Param('id') id: string) {
+    await this.userService.remove(+id);
+    return {
+      succcess: true,
+      message: "User deleted successfully",
+    }
   }
 }
